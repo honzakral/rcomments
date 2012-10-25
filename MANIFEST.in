@@ -1,0 +1,15 @@
+include AUTHORS
+include INSTALL
+include LICENSE
+include MANIFEST.in
+include README.rst
+include README
+include dev_requirements.txt
+include requirements.txt
+recursive-include doc *
+recursive-include test_APP_NAME *
+recursive-include APP_NAME/*/locale *
+recursive-include APP_NAME/*/templates *
+
+global-exclude .coverage
+exclude test_APP_NAME/settings/local.py
