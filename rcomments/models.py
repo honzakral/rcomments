@@ -18,3 +18,8 @@ class RComment(models.Model):
 
     def is_public(self):
         return self.submit_date <= datetime.now() and not self.moderated
+
+    def moderate(self, commit=True):
+        self.moderated = True
+        if commit:
+            self.save(force_update=True)

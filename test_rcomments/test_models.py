@@ -17,3 +17,9 @@ class TestRComment(TestCase):
         tools.assert_false(rc.is_public())
 
 
+    def test_moderate_comment_sets_moderated_flag(self):
+        rc = RComment()
+        rc.moderate(False)
+
+        tools.assert_true(rc.moderated)
+
