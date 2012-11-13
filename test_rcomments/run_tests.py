@@ -4,7 +4,7 @@ from os import path, environ
 
 import nose
 
-environ['DJANGO_SETTINGS_MODULE'] = 'test_APP_NAME.settings'
+environ['DJANGO_SETTINGS_MODULE'] = 'test_rcomments.settings'
 
 
 def run_all(argv=None):
@@ -12,12 +12,12 @@ def run_all(argv=None):
     if argv is None:
         argv = [
             'nosetests',
-            '--with-coverage', '--cover-package=APP_NAME', '--cover-erase',
+            '--with-coverage', '--cover-package=rcomments', '--cover-erase',
             '--nocapture', '--nologcapture',
             '--verbose', '--no-skip'
         ]
     else:
-        for p in ('--with-coverage', '--cover-package=APP_NAME', '--cover-erase'):
+        for p in ('--with-coverage', '--cover-package=rcomments', '--cover-erase'):
             if p not in argv:
                 argv.append(p)
 

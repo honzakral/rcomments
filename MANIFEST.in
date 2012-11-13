@@ -7,9 +7,9 @@ include README
 include dev_requirements.txt
 include requirements.txt
 recursive-include doc *
-recursive-include test_APP_NAME *
-recursive-include APP_NAME/*/locale *
-recursive-include APP_NAME/*/templates *
+recursive-include test_rcomments *
+recursive-include rcomments/*/locale *
+recursive-include rcomments/*/templates *
 
 global-exclude .coverage
-exclude test_APP_NAME/settings/local.py
+exclude test_rcomments/settings/local.py

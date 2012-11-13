@@ -1,11 +1,11 @@
 DEBUG = True
 
-ROOT_URLCONF = 'test_APP_NAME.urls'
+ROOT_URLCONF = 'test_rcomments.urls'
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 TEMPLATE_LOADERS = (
-    'test_APP_NAME.test_helpers.load_template_source',
+    'test_rcomments.test_helpers.load_template_source',
     'django.template.loaders.app_directories.Loader',
 )
 
@@ -41,5 +41,5 @@ INSTALLED_APPS = (
     'django.contrib.redirects',
     'django.contrib.admin',
 
-    'APP_NAME',
+    'rcomments',
 )

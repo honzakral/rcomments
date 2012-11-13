@@ -1,1 +1,1 @@
-APP_NAME whatever
+rcomments whatever

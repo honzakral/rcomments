@@ -19,14 +19,14 @@ test_requires = [
 ]
 
 setup(
-    name = 'APP_NAME',
-    description = "APP_NAME",
-    url = "https://github.com/YOU/APP_NAME/",
+    name = 'rcomments',
+    description = "rcomments",
+    url = "https://github.com/YOU/rcomments/",
     long_description = long_description,
     version = __versionstr__,
     author = "YOU",
     author_email = "YOU@gmail.com",
-    packages = ['APP_NAME'],
+    packages = ['rcomments'],
     zip_safe = False,
     include_package_data = True,
     classifiers = [
@@ -36,6 +36,6 @@ setup(
     ],
     install_requires=install_requires,
 
-    test_suite='test_APP_NAME.run_tests.run_all',
+    test_suite='test_rcomments.run_tests.run_all',
     test_requires=test_requires,
 )
