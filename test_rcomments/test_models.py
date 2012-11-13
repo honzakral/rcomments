@@ -44,3 +44,26 @@ class TestRCommentWithDB(DjangoTestCase):
 
         rc = RComment.objects.get(pk=rc.pk)
         tools.assert_true(rc.moderated)
+
+    def test_manager_returns_comments_for_proper_object(self):
+        rc = self._create_comment()
+        self._create_comment(content_object=rc)
+
+        clist = RComment.objects.for_model(self.ct)
+
+        tools.assert_equals(1, clist.count())
+        tools.assert_equals(rc, clist[0])
+
+    def test_manager_ommits_moderated_comments(self):
+        self._create_comment(moderated=True)
+
+        clist = RComment.objects.for_model(self.ct)
+
+        tools.assert_equals(0, clist.count())
+
+    def test_manager_ommits_comments_in_future(self):
+        self._create_comment(submit_date=datetime.now() + timedelta(10))
+
+        clist = RComment.objects.for_model(self.ct)
+
+        tools.assert_equals(0, clist.count())
