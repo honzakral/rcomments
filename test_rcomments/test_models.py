@@ -1,13 +1,11 @@
 from datetime import datetime, timedelta
 from unittest import TestCase
 
-from django.test import TestCase as DjangoTestCase
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
-
 from rcomments.models import RComment
 
 from nose import tools
+
+from test_rcomments.cases import RCommentTestCase
 
 class TestRComment(TestCase):
     def test_comment_in_future_arent_public(self):
@@ -27,17 +25,7 @@ class TestRComment(TestCase):
 
         tools.assert_true(rc.moderated)
 
-class TestRCommentWithDB(DjangoTestCase):
-    def setUp(self):
-        super(TestRCommentWithDB, self).setUp()
-        self.ct = ContentType.objects.get_for_model(ContentType)
-        self.user = User.objects.create_user('some-user', 'user@example.com')
-
-    def _create_comment(self, **kwargs):
-        defaults = dict(content_object=self.ct, user=self.user, text='First!')
-        defaults.update(kwargs)
-        return RComment.objects.create(**defaults)
-
+class TestRCommentWithDB(RCommentTestCase):
     def test_moderate_saves_comment(self):
         rc = self._create_comment()
         rc.moderate()
