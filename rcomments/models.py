@@ -19,7 +19,7 @@ class RComment(models.Model):
 
     user = models.ForeignKey(User)
     submit_date = models.DateTimeField(db_index=True, default=datetime.now)
-    text = models.TextField()
+    text = models.TextField(blank=False)
     moderated = models.BooleanField(default=False)
 
     objects = RCommentManager()

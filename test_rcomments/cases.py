@@ -8,7 +8,7 @@ class RCommentTestCase(TestCase):
     def setUp(self):
         super(RCommentTestCase, self).setUp()
         self.ct = ContentType.objects.get_for_model(ContentType)
-        self.user = User.objects.create_user('some-user', 'user@example.com')
+        self.user = User.objects.create_user('someuser', 'user@example.com', 'secret')
 
     def _create_comment(self, **kwargs):
         defaults = dict(content_object=self.ct, user=self.user, text='First!')

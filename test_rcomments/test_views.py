@@ -63,4 +63,16 @@ class TestPostComment(RCommentTestCase):
         tools.assert_equals(302, response.status_code)
         tools.assert_equals(1, RComment.objects.count())
 
+    def test_url_parsing(self):
+        url = reverse('comment-post', kwargs={'ct_id': self.ct.pk, 'object_pk': self.ct.pk})
+        loader.register('comment_form.html', 'Hello world!')
+        self.client.login(username='someuser', password='secret')
+        response = self.client.post(url, {})
+
+        tools.assert_equals(200, response.status_code)
+        tools.assert_equals('Hello world!', response.content)
+        tools.assert_in('form', response.context)
+        form = response.context['form']
+        tools.assert_false(form.is_valid())
+        tools.assert_equals(['text'], form.errors.keys())
 
