@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.test import RequestFactory
 from django.http import Http404
 
@@ -6,6 +7,7 @@ from rcomments.views import comment_list
 from nose import tools
 
 from test_rcomments.cases import RCommentTestCase
+from test_rcomments.test_helpers import loader
 
 class TestCommentList(RCommentTestCase):
     def setUp(self):
@@ -26,3 +28,12 @@ class TestCommentList(RCommentTestCase):
         tools.assert_in('comment_list', response.context_data)
         tools.assert_equals(set(c.pk for c in self.comments), set(c.pk for c in response.context_data['comment_list']))
 
+    def test_url_parsing(self):
+        url = reverse('comment-list', kwargs={'ct_id': self.ct.pk, 'object_pk': self.ct.pk})
+        loader.register('comment_list.html', 'Hello world!')
+        response = self.client.get(url)
+
+        tools.assert_equals(200, response.status_code)
+        tools.assert_equals('Hello world!', response.content)
+        tools.assert_in('comment_list', response.context)
+        tools.assert_equals(set(c.pk for c in self.comments), set(c.pk for c in response.context['comment_list']))
