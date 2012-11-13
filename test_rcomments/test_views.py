@@ -2,7 +2,9 @@ from django.core.urlresolvers import reverse
 from django.test import RequestFactory
 from django.http import Http404
 
-from rcomments.views import comment_list
+from rcomments.views import comment_list, post_comment
+from rcomments.models import RComment
+from rcomments.forms import RCommentForm
 
 from nose import tools
 
@@ -37,3 +39,28 @@ class TestCommentList(RCommentTestCase):
         tools.assert_equals('Hello world!', response.content)
         tools.assert_in('comment_list', response.context)
         tools.assert_equals(set(c.pk for c in self.comments), set(c.pk for c in response.context['comment_list']))
+
+class TestPostComment(RCommentTestCase):
+    def setUp(self):
+        super(TestPostComment, self).setUp()
+        self.rf = RequestFactory()
+
+    def test_template_rendered_on_get(self):
+        request = self.rf.get('/')
+        request.user = self.user
+
+        response = post_comment(request, str(self.ct.pk), str(self.ct.pk))
+
+        tools.assert_in('form', response.context_data)
+        tools.assert_true(isinstance(response.context_data['form'], RCommentForm))
+
+    def test_comment_created_on_post(self):
+        request = self.rf.post('/', {'text': 'Hey'})
+        request.user = self.user
+
+        response = post_comment(request, str(self.ct.pk), str(self.ct.pk))
+
+        tools.assert_equals(302, response.status_code)
+        tools.assert_equals(1, RComment.objects.count())
+
+
