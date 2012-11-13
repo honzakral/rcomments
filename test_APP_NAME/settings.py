@@ -5,7 +5,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
 TEMPLATE_LOADERS = (
-    'secure.test_helpers.template_loader.load_template_source',
+    'test_APP_NAME.test_helpers.load_template_source',
     'django.template.loaders.app_directories.Loader',
 )
 
