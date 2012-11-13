@@ -33,8 +33,13 @@ class TestRCommentWithDB(DjangoTestCase):
         self.ct = ContentType.objects.get_for_model(ContentType)
         self.user = User.objects.create_user('some-user', 'user@example.com')
 
+    def _create_comment(self, **kwargs):
+        defaults = dict(content_object=self.ct, user=self.user, text='First!')
+        defaults.update(kwargs)
+        return RComment.objects.create(**defaults)
+
     def test_moderate_saves_comment(self):
-        rc = RComment.objects.create(content_object=self.ct, user=self.user, text='First!')
+        rc = self._create_comment()
         rc.moderate()
 
         rc = RComment.objects.get(pk=rc.pk)
